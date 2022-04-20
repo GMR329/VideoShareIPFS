@@ -1,0 +1,33 @@
+url: https://github.com/orbitdb/field-manual
+COntent addressing: 
+Content addressing is achieved by a technique called hashing, which is a very oblique way of saying "chops up your data into blocks, sum them together repeatedly, and reduce the file down to a unique, consistently-sized alphanumeric string." This is a process identical to generating a "checksum," if you're familiar with that.
+
+The two main reasons to switch to content addressing are performance and verifiability. The performance boost comes from the fact that you can download files simultaneously from multiple peers, similar to Bittorrent. The hashes are also verifiable, meaning that you only download data you request. No other data can have that same hash.
+
+		IF you upload the same file for example a text file that says "I love networking" with the title CoolNetwork to ipfs you will always get the same cid no watter how/when you do it
+		
+		Data Structure: 
+Node connections are generally represented in data by storing a pointer to another node id. For example, modeling a twitter follow in JSON might look something like { id: "@your_username", follows: "@aphelionz" } 
+
+in a DAG, a common and very effective way is to point directly to the CIDs
+
+URL:https://github.com/orbitdb/field-manual/blob/main/03_The_Architecture_of_OrbitDB/02_ipfs-log.md
+
+	WHat is in the database :
+	hash: the hash of the entry, in cidv1 format (this will switch to base32 soon)
+id: the user-supplied ID of the log
+payload: the actual content of the log entry, can be any JSON-serializable object
+next: an array of hashes that point to previous log entries from the head of the log
+v: the version of the log schema. Typically for internal tracking only and migration purposes
+clock the lamport clock values, explained previously in this chapter
+key the orbitdb-generated public key for verification purposes
+identity the identity object. defaults to the standard OrbitDB identity but can be customized
+sig the signaure of the entry, signed by the orbitdb private key, for verification purposes
+
+	I am thinking we could have the db cid match the video cid?
+	
+	
+guide:
+https://rossbulat.medium.com/orbitdb-deploying-the-distributed-ipfs-database-with-react-79afa1a7fabb
+	
+	
