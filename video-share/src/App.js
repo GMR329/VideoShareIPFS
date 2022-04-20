@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { Buffer } from 'buffer';
 import { create } from "ipfs-http-client";
 
-const IPFS = require('ipfs')
-const OrbitDB = require('orbit-db')
+import ReactPlayer from 'react-player';
+
 
 const client = create('https://ipfs.infura.io:5001/api/v0');
 
@@ -22,12 +22,16 @@ async function main () {
 
 
 function App() {
-  main();
-  const[file,setFile]=useState(null);
+
+  const [uploadedVideos,setUploadedVideos]=useState([]);
+  const [embeddedVideos, setEmbeddedVideos]=useState([]);
+  const[file,setFile]=useState(null); 
+
   const[fileName,setFileName]=useState("");
   const[fileType,setFileType]=useState("");
   const[fileSize,setFileSize]=useState("");
   const[url,setURL]=useState("");
+  const [dropdown,setDropdown]=useState("");
   const[searchURL,setSearchURL]=useState("");
  const[textField,setTextField]=useState("");
 
@@ -59,6 +63,13 @@ async function uploadButtonHandler(event){
   try {
     const uploadedFile = await client.add(file);
       var fullLink='https://ipfs.infura.io/ipfs/'+uploadedFile.path;
+
+      var videoData= {
+         link:fullLink,
+         name:fileName
+
+      };
+      setUploadedVideos(old => [...old, videoData]);
      setURL(fullLink);
      console.log(url);
         
@@ -68,9 +79,14 @@ async function uploadButtonHandler(event){
 
 }
   
-  function print(){
-    console.log(textField);
-    window.open(textField);
+
+
+ function embedVideo(){
+ 
+   setEmbeddedVideos(oldArray => [...oldArray, textField]);
+
+ }
+
 
 
   }
@@ -117,14 +133,9 @@ async function uploadButtonHandler(event){
     
 
   };
-  const formStyle={
-  display: "flex",
-  flexDirection:"row",
-  alignItems:"center",
-  margin:"20px"
 
+  
 
-  };
   const TitleStyle={
   fontSize:"50px",
   border: '5px solid rgba(0, 0, 255, .5)',
@@ -132,6 +143,22 @@ async function uploadButtonHandler(event){
 
 
   };
+  const fetchDivStyle={
+    display: "flex",
+    flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"center"
+
+  };
+  const innerFetchDivStyle={
+    display: "flex",
+    flexDirection: "column",
+    alignItems:"center",
+    justifyContent:"center"
+
+  };
+
+ 
 const uploadInfoStyle={
 
   padding:"10px",
@@ -148,12 +175,9 @@ const secondHeaderStyle={
 
 }
     
-const bottomFormStyle={
-  display: "flex",
-  flexDirection:"column",
-  margin:"20px"
 
-};
+
+
 const fetchVideoStyle={
   backgroundColor: "black",
   color:"white",
@@ -166,28 +190,53 @@ const fetchVideoStyle={
 
 }
 
+
+
   
     return (
 
       <div style={divStyle}>
         <span style={TitleStyle} >Upload and Embed Video By IPFS</span>
-        <form style={formStyle}>
+       
           <input style={fileInputStyle} type="file"  onChange={getFileFromComputer}  />
           <button style={buttonStyle}className='uploadFileButton' type="submit" onClick={uploadButtonHandler} >Upload file</button>
           
-        </form>
-        <h3 style={  {border: '5px solid rgba(255, 0, 0,.6)'}}>This Is Info Of The File You Selected: </h3>
+
+
+        <h3 style={  {color:"black"}}>This Is Info Of The File You Selected: </h3>
+
         <div style={innerDivStyle}> 
         <h4 style={uploadInfoStyle}>  File Name: {fileName} </h4>
         <h4  style={uploadInfoStyle}> File Type: {fileType}</h4>
         <h4 style={uploadInfoStyle}> File Size: {fileSize}</h4>
         <h5 style={uploadInfoStyle}> URl of Uploaded File: {url}</h5>
         </div>
-        <span style={secondHeaderStyle}>Enter URL of Video To Embed</span>
-       <form style={bottomFormStyle}> 
+
+     <div className='fetchDiv' style={fetchDivStyle}>
+      <div style={innerFetchDivStyle}>
+        <span style={secondHeaderStyle}>Enter URL of Video To Fetch</span>
+    
        <input style ={{width:"400px"}} type="text"  onChange={e => setTextField(e.target.value)}  />
-        <button style={fetchVideoStyle} className='videoLinkField' type="submit" onClick={()=>print()} >Fetch Video</button>
-       </form>
+       <button style={buttonStyle}className='Fetch Video' type="submit" onClick={()=>embedVideo()} >Embed</button>
+       </div>
+       <div style= {innerFetchDivStyle}>
+       <span style={secondHeaderStyle}>Videos You Have Aldready Uploaded</span>
+       <select onChange={(e)=>setDropdown(e.target.value)} >
+       <option value={"Select Video to Embed"}>Select Video To Embed</option>
+          {
+            uploadedVideos.map(elem =>  <option value={elem.link}>{elem.name}</option>)
+          }
+           
+          </select>
+        
+
+          <button onClick ={()=>   setEmbeddedVideos(oldArr => [...oldArr, dropdown])  }style={buttonStyle}className='Embed Video' type="submit" >Embed </button>
+       </div>
+       </div>
+     
+       {embeddedVideos.map(elem =>  <ReactPlayer controls={true} url={elem}/>)}
+        <button onClick={()=>console.log(dropdown)}>test </button>
+
      
 
       </div>
