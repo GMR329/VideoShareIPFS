@@ -1,0 +1,25 @@
+{
+  "name": "videoshareipfs",
+  "version": "1.0.0",
+  "description": "CS445 Semester Project: A video sharing website utilizing IPFS protocol hosted with Fleek",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GMR329/VideoShareIPFS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GMR329/VideoShareIPFS/issues"
+  },
+  "homepage": "https://github.com/GMR329/VideoShareIPFS#readme",
+  "dependencies": {
+    "ipfs": "^0.62.1",
+    "ipfs-http-client": "^56.0.2",
+    "orbit-db": "^0.28.3",
+    "react-player": "^2.10.0"
+  }
+}
