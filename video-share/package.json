@@ -6,15 +6,25 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
     "buffer": "^6.0.3",
+<<<<<<< HEAD
     "ipfs": "^0.62.1",
     "ipfs-http-client": "^56.0.1",
     "node": "^17.7.2",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "orbit-db": "^0.28.3",
+=======
+    "file-saver": "^2.0.5",
+    "ipfs-http-client": "^56.0.1",
+    "js-file-download": "^0.4.12",
+>>>>>>> 2920f455d388f9b8ae4cea79a8fcdbee2557e654
     "react": "^17.0.2",
+    "react-alert": "^7.0.3",
     "react-dom": "^17.0.2",
+    "react-player": "^2.10.0",
     "react-scripts": "5.0.0",
+    "react-video-js-player": "^1.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

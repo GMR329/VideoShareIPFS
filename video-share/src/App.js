@@ -3,6 +3,13 @@ import './App.css';
 import React, { useState } from 'react';
 import { Buffer } from 'buffer';
 import { create } from "ipfs-http-client";
+import { scryRenderedComponentsWithType } from 'react-dom/test-utils';
+import { Alert } from 'react-alert'
+import { saveAs } from "file-saver";
+import axios from 'axios'
+import fileDownload from 'js-file-download'
+import VideoPlayer from "react-video-js-player";
+import ReactPlayer from 'react-player';
 
 const IPFS = require('ipfs')
 const OrbitDB = require('orbit-db')
@@ -22,8 +29,13 @@ async function main () {
 
 
 function App() {
+<<<<<<< HEAD
   main();
   const[file,setFile]=useState(null);
+=======
+  const [z, setZ]=useState([]);
+  const[file,setFile]=useState(null); 
+>>>>>>> 2920f455d388f9b8ae4cea79a8fcdbee2557e654
   const[fileName,setFileName]=useState("");
   const[fileType,setFileType]=useState("");
   const[fileSize,setFileSize]=useState("");
@@ -31,13 +43,16 @@ function App() {
   const[searchURL,setSearchURL]=useState("");
  const[textField,setTextField]=useState("");
 
+
+
   function getFileFromComputer(e) {
-    
+   
     var localFile=e.target.files[0];
 
   setFileName(localFile.name);
   setFileType(localFile.type);
   setFileSize(localFile.size);
+  console.log(localFile.type);
 
   //  console.log(selectedFile);
   //  setFileName(selectedFile.name);
@@ -49,7 +64,8 @@ function App() {
     console.log("This is data in file : ", Buffer(fileReader.result));
   }
 
-  
+ 
+        
   e.preventDefault(); 
 
   }
@@ -57,10 +73,21 @@ function App() {
 async function uploadButtonHandler(event){
   event.preventDefault();
   try {
-    const uploadedFile = await client.add(file);
+    if((fileType.toLowerCase()).includes("video")){
+     
+       
+      const uploadedFile = await client.add(file);
       var fullLink='https://ipfs.infura.io/ipfs/'+uploadedFile.path;
      setURL(fullLink);
      console.log(url);
+     
+          }
+          else{
+alert("Please Upload a Video File");
+
+          }
+         
+  
         
   } catch (err) {
     console.log(err.message);
@@ -68,21 +95,25 @@ async function uploadButtonHandler(event){
 
 }
   
-  function print(){
-    console.log(textField);
-    window.open(textField);
+   
+
+ function print(){
+ 
+   setZ(oldArray => [...oldArray, textField]);
+
+ }
 
 
-  }
   const buttonStyle = {
-  backgroundColor: "black",
-  color:"white",
+  backgroundColor: "gray",
+  color:"black",
   fontSize:"25px",
   fontFamily:"Montserrat",
   padding:"5px",
-  borderRadius:"10px",
-  margin:"20px",
-  border: '5px solid rgba(0, 255, 0, .5)',
+  marginLeft:"80px",
+  marginRight:"80px",
+  border: '7px solid darkred',
+ 
   padding:"10px"
 
   
@@ -105,13 +136,14 @@ async function uploadButtonHandler(event){
 
   }
   const fileInputStyle={
-    backgroundColor: "black",
-    color:"white",
+    backgroundColor: "gray",
+    color:"black",
     fontSize:"20px",
     fontFamily:"Montserrat",
     padding:"5px",
-    margin:"20px",
-    border: '5px solid rgba(255, 0, 0, .5)',
+    marginLeft:"80px",
+    marginRight:"80px",
+    border: '8px solid darkred',
     padding:"10px"
 
     
@@ -121,29 +153,36 @@ async function uploadButtonHandler(event){
   display: "flex",
   flexDirection:"row",
   alignItems:"center",
-  margin:"20px"
+  marginLeft:"80px",
+  marginRight:"80px",
 
 
   };
   const TitleStyle={
   fontSize:"50px",
-  border: '5px solid rgba(0, 0, 255, .5)',
-  padding:"10px"
+  
+  padding:"10px",
+  color:"black",
+  fontFamily:"Montserrat",
+
+
 
 
   };
 const uploadInfoStyle={
 
   padding:"10px",
-  margin:"80px",
-  border: '5px solid rgba(0, 0, 255,.6)'
+  marginLeft:"80px",
+  marginRight:"80px",
+  
 
 
 };
 const secondHeaderStyle={
   fontSize:"30px",
-  border: '5px solid rgba(0, 255, 0, .5)',
-  padding:"10px"
+  padding:"10px",
+  marginLeft:"80px",
+  marginRight:"80px",
 
 
 }
@@ -151,7 +190,7 @@ const secondHeaderStyle={
 const bottomFormStyle={
   display: "flex",
   flexDirection:"column",
-  margin:"20px"
+  margin:"0px"
 
 };
 const fetchVideoStyle={
@@ -160,10 +199,16 @@ const fetchVideoStyle={
   fontFamily:"Montserrat",
   fontSize:"20px",
   padding:"5px",
-  margin:"20px",
-  border: '10px solid rgba(255, 0 0, .5)'
+  marginLeft:"80px",
+  marginRight:"80px",
+  border: '5px solid darkred'
 
 
+}
+
+function test(){
+
+  alert(z);
 }
 
   
@@ -176,20 +221,26 @@ const fetchVideoStyle={
           <button style={buttonStyle}className='uploadFileButton' type="submit" onClick={uploadButtonHandler} >Upload file</button>
           
         </form>
-        <h3 style={  {border: '5px solid rgba(255, 0, 0,.6)'}}>This Is Info Of The File You Selected: </h3>
+        <h3 style={  {color:"black"}}>This Is Info Of The File You Selected: </h3>
         <div style={innerDivStyle}> 
         <h4 style={uploadInfoStyle}>  File Name: {fileName} </h4>
         <h4  style={uploadInfoStyle}> File Type: {fileType}</h4>
         <h4 style={uploadInfoStyle}> File Size: {fileSize}</h4>
         <h5 style={uploadInfoStyle}> URl of Uploaded File: {url}</h5>
         </div>
-        <span style={secondHeaderStyle}>Enter URL of Video To Embed</span>
-       <form style={bottomFormStyle}> 
-       <input style ={{width:"400px"}} type="text"  onChange={e => setTextField(e.target.value)}  />
-        <button style={fetchVideoStyle} className='videoLinkField' type="submit" onClick={()=>print()} >Fetch Video</button>
-       </form>
-     
 
+      
+        <span style={secondHeaderStyle}>Enter URL of Video To Fetch</span>
+    
+       <input style ={{width:"400px"}} type="text"  onChange={e => setTextField(e.target.value)}  />
+       <button style={buttonStyle}className='Fetch Video' type="submit" onClick={()=>print()} >Fetch File</button>
+
+    
+
+       {z.map(elem =>  <ReactPlayer controls={true} url={elem}/>)}
+    
+     
+    
       </div>
     
     );
