@@ -192,59 +192,59 @@ const secondHeaderStyle={
 
 
 
-     return (
+     // return (
 
-       <div style={divStyle}>
-         <span style={TitleStyle} >Upload and Embed Video By IPFS</span>
-         <form style={formStyle}>
+      //  <div style={divStyle}>
+      //    <span style={TitleStyle} >Upload and Embed Video By IPFS</span>
+      //    <form style={formStyle}>
+      //
+      //      <input style={fileInputStyle} type="file"  onChange={getFileFromComputer}  />
+      //      <button style={buttonStyle}className='uploadFileButton' type="submit" onClick={uploadButtonHandler} >Upload file</button>
+      //
+      //    </form>
+      //
+      //    <h3 style={  {color:"black"}}>This Is Info Of The File You Selected: </h3>
+      //    <div style={innerDivStyle}>
+      //    <h4 style={uploadInfoStyle}>  File Name: {fileName} </h4>
+      //    <h4  style={uploadInfoStyle}> File Type: {fileType}</h4>
+      //    <h4 style={uploadInfoStyle}> File Size: {fileSize}</h4>
+      //    <h5 style={uploadInfoStyle}> URl of Uploaded File: {url}</h5>
+      //    </div>
+      //
+      //
+      // <div className='fetchDiv' style={fetchDivStyle}>
+      //  <div style={innerFetchDivStyle}>
+      //    <span style={secondHeaderStyle}>Enter URL of Video To Fetch</span>
+      //
+      //   <input style ={{width:"400px"}} type="text"  onChange={e => setTextField(e.target.value)}  />
+      //
+      //
+      //   <button style={buttonStyle}className='Fetch Video' type="submit" onClick={()=>embedVideo()} >Embed</button>
+      //   </div>
+      //   <div style= {innerFetchDivStyle}>
+      //   <span style={secondHeaderStyle}>Videos You Have Aldready Uploaded</span>
+      //   <select onChange={(e)=>setDropdown(e.target.value)} >
+      //   <option value={"Select Video to Embed"}>Select Video To Embed</option>
+      //      {
+      //        uploadedVideos.map(elem =>  <option value={elem.link}>{elem.name}</option>)
+      //      }
+      //
+      //      </select>
+      //
+      //
+      //
+      //
+      //      <button onClick ={()=>   setEmbeddedVideos(oldArr => [...oldArr, dropdown])  }style={buttonStyle}className='Embed Video' type="submit" >Embed </button>
+      //   </div>
+      //   </div>
+      //
+      //   {embeddedVideos.map(elem =>  <ReactPlayer controls={true} url={elem}/>)}
+      //    <button onClick={()=>console.log(dropdown)}>test </button>
+      //
+      //
+      //  </div>
 
-           <input style={fileInputStyle} type="file"  onChange={getFileFromComputer}  />
-           <button style={buttonStyle}className='uploadFileButton' type="submit" onClick={uploadButtonHandler} >Upload file</button>
-
-         </form>
-
-         <h3 style={  {color:"black"}}>This Is Info Of The File You Selected: </h3>
-         <div style={innerDivStyle}>
-         <h4 style={uploadInfoStyle}>  File Name: {fileName} </h4>
-         <h4  style={uploadInfoStyle}> File Type: {fileType}</h4>
-         <h4 style={uploadInfoStyle}> File Size: {fileSize}</h4>
-         <h5 style={uploadInfoStyle}> URl of Uploaded File: {url}</h5>
-         </div>
-
-
-      <div className='fetchDiv' style={fetchDivStyle}>
-       <div style={innerFetchDivStyle}>
-         <span style={secondHeaderStyle}>Enter URL of Video To Fetch</span>
-
-        <input style ={{width:"400px"}} type="text"  onChange={e => setTextField(e.target.value)}  />
-
-
-        <button style={buttonStyle}className='Fetch Video' type="submit" onClick={()=>embedVideo()} >Embed</button>
-        </div>
-        <div style= {innerFetchDivStyle}>
-        <span style={secondHeaderStyle}>Videos You Have Aldready Uploaded</span>
-        <select onChange={(e)=>setDropdown(e.target.value)} >
-        <option value={"Select Video to Embed"}>Select Video To Embed</option>
-           {
-             uploadedVideos.map(elem =>  <option value={elem.link}>{elem.name}</option>)
-           }
-
-           </select>
-
-
-
-
-           <button onClick ={()=>   setEmbeddedVideos(oldArr => [...oldArr, dropdown])  }style={buttonStyle}className='Embed Video' type="submit" >Embed </button>
-        </div>
-        </div>
-
-        {embeddedVideos.map(elem =>  <ReactPlayer controls={true} url={elem}/>)}
-         <button onClick={()=>console.log(dropdown)}>test </button>
-
-
-       </div>
-
-    );
+    // );
 
 }
 export default App;
