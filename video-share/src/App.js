@@ -9,10 +9,38 @@ import React, { useState } from 'react';
  import VideoPlayer from "react-video-js-player";
  import ReactPlayer from 'react-player';
 
+ /*
+Authors:Bryce Manley,Pranav Rajan , and Garreth Rice
+
+Discription:
+With this Program the user will be able to upload a video file, have that video file  hosted and pinnned to ipfs, The user will be able to enter the url
+ of oother videos they are able to fetch and watch, as well as have information posted about the video they are watching. such as file size, the video url, and file name. 
+ The user is able to watch multiple videos at the same time. from our site or from others.
+
+ This is the main component of the application. It is the first component that is rendered. It handles all IPFS operations
+and renders the video player. and all layouts. We are utilizing react.js for the frontend, and ipfs/infura for all networking. Givin more time 
+we would have used orbitDB for the database, but given orbitdb is still in alpha, and the documentation is significantly worse than ipfs it would not
+be feasable to have that done in a semester. There has been some research  done into orbitdb which is noted in dome of the text files attached to the 
+project.
+
+
+ */
+
+
+
+
+
+
+ //creates ipfs client for this we are using infura api 
+ //much time wass spent trying to not use infura and use default 
+ //ipfs node but the documentation with ipfs in still in alpha stages
+ //so we would have to start rolling back features to do that
  const client = create('https://ipfs.infura.io:5001/api/v0');
 
 
  function App() {
+
+//creates getters ant setters esentally
    const [z, setZ]=useState([]);
    const [uploadedVideos,setUploadedVideos]=useState([]);
    const [embeddedVideos, setEmbeddedVideos]=useState([]);
@@ -26,20 +54,21 @@ import React, { useState } from 'react';
   const[textField,setTextField]=useState("");
 
   function getFileFromComputer(e) {
-
+//this is the code that allows the user to upload their file
     var localFile=e.target.files[0];
   setFileName(localFile.name);
   setFileType(localFile.type);
   setFileSize(localFile.size);
-  console.log(localFile.type);
-  //  console.log(selectedFile);
-  //  setFileName(selectedFile.name);
-  //  setFileType(selectedFile.type);
+  //console.log(localFile.type);
+
   const fileReader = new window.FileReader();
+  //openes the file reader
   fileReader.readAsArrayBuffer(localFile);
   fileReader.onloadend = () => {
     setFile(Buffer(fileReader.result));
-    console.log("This is data in file : ", Buffer(fileReader.result));
+    //the dafault file reader.result does not putput in a format that is readable to ipfs or infura
+    //so we need to convert it to a buffer
+   // console.log("This is data in file : ", Buffer(fileReader.result));
   }
 
 
@@ -48,20 +77,33 @@ import React, { useState } from 'react';
 async function uploadButtonHandler(event){
   event.preventDefault();
   try {
+    //checks if the file is a video if it is not ask for a video
     if((fileType.toLowerCase()).includes("video")){
 
-
+      //most important line in the program the .add is an ipfs/infura api call 
+      //which hosts the file using ipfs. It calls client of that add api call 
+      //in this case the client is esentally a server run by infure but hopefully we can eventually 
+      //make that be ipfs running on a local node the await keyword is spacific to js 
+      //it waits for the function to finish before moving on esentally 
+      //the function returns a address or cid to the file
        const uploadedFile = await client.add(file);
+
+
+       //this is the link that is generated if we were
        var fullLink='https://ipfs.infura.io/ipfs/'+uploadedFile.path;
 
+      // used to display information about the video file
        var videoData= {
           link:fullLink,
           name:fileName
 
        };
+
+       //this is causing a councole error needs to be fixed evautually
        setUploadedVideos(old => [...old, videoData]);
+       
       setURL(fullLink);
-      console.log(url);
+      //console.log(url);
 
           }
           else{
@@ -77,7 +119,7 @@ alert("Please Upload a Video File");
 
 
 
-
+//
   function embedVideo(){
 
     setEmbeddedVideos(oldArray => [...oldArray, textField]);
@@ -239,7 +281,6 @@ const secondHeaderStyle={
         </div>
 
         {embeddedVideos.map(elem =>  <ReactPlayer controls={true} url={elem}/>)}
-         <button onClick={()=>console.log(dropdown)}>test </button>
 
 
        </div>
