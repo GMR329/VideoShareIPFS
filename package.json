@@ -18,6 +18,7 @@
   "homepage": "https://github.com/GMR329/VideoShareIPFS#readme",
   "dependencies": {
     "ipfs": "^0.62.1",
+    "ipfs-core": "^0.14.2",
     "ipfs-http-client": "^56.0.2",
     "orbit-db": "^0.28.3",
     "react-player": "^2.10.0"
