@@ -16,7 +16,7 @@ import React, { useState } from 'react';
    const [z, setZ]=useState([]);
    const [uploadedVideos,setUploadedVideos]=useState([]);
    const [embeddedVideos, setEmbeddedVideos]=useState([]);
-   const[file,setFile]=useState(null); 
+   const[file,setFile]=useState(null);
    const[fileName,setFileName]=useState("");
    const[fileType,setFileType]=useState("");
    const[fileSize,setFileSize]=useState("");
@@ -26,7 +26,7 @@ import React, { useState } from 'react';
   const[textField,setTextField]=useState("");
 
   function getFileFromComputer(e) {
-   
+
     var localFile=e.target.files[0];
   setFileName(localFile.name);
   setFileType(localFile.type);
@@ -41,15 +41,15 @@ import React, { useState } from 'react';
     setFile(Buffer(fileReader.result));
     console.log("This is data in file : ", Buffer(fileReader.result));
   }
- 
-        
-  e.preventDefault(); 
+
+
+  e.preventDefault();
   }
 async function uploadButtonHandler(event){
   event.preventDefault();
   try {
     if((fileType.toLowerCase()).includes("video")){
-     
+
 
        const uploadedFile = await client.add(file);
        var fullLink='https://ipfs.infura.io/ipfs/'+uploadedFile.path;
@@ -67,9 +67,9 @@ async function uploadButtonHandler(event){
           else{
 alert("Please Upload a Video File");
           }
-         
-  
-        
+
+
+
   } catch (err) {
     console.log(err.message);
   }
@@ -77,7 +77,7 @@ alert("Please Upload a Video File");
 
 
 
- 
+
   function embedVideo(){
 
     setEmbeddedVideos(oldArray => [...oldArray, textField]);
@@ -93,9 +93,9 @@ alert("Please Upload a Video File");
   marginLeft:"80px",
   marginRight:"80px",
   border: '7px solid darkred',
- 
+
   padding:"10px"
-  
+
   };
   const divStyle={
     display: "flex",
@@ -162,7 +162,7 @@ alert("Please Upload a Video File");
    padding:"10px",
   marginLeft:"80px",
   marginRight:"80px",
-  
+
 };
 const secondHeaderStyle={
   fontSize:"30px",
@@ -204,7 +204,7 @@ const secondHeaderStyle={
          </form>
 
          <h3 style={  {color:"black"}}>This Is Info Of The File You Selected: </h3>
-         <div style={innerDivStyle}> 
+         <div style={innerDivStyle}>
          <h4 style={uploadInfoStyle}>  File Name: {fileName} </h4>
          <h4  style={uploadInfoStyle}> File Type: {fileType}</h4>
          <h4 style={uploadInfoStyle}> File Size: {fileSize}</h4>
@@ -232,7 +232,7 @@ const secondHeaderStyle={
            </select>
 
 
-       
+
 
            <button onClick ={()=>   setEmbeddedVideos(oldArr => [...oldArr, dropdown])  }style={buttonStyle}className='Embed Video' type="submit" >Embed </button>
         </div>
@@ -243,8 +243,8 @@ const secondHeaderStyle={
 
 
        </div>
-    
+
     );
-  
+
 }
 export default App;
